@@ -28,7 +28,7 @@ public class LoginTest extends BasicTest{
     public void beforeTest() {
 
         WebDriver driver = super.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, 100);
+        WebDriverWait wait = super.getWait();
 
         loginService = new LoginService(driver,wait);
         inventoryService = new InventoryService(driver, wait);

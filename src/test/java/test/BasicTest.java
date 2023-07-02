@@ -6,14 +6,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import util.WebDriverHelper;
 
 public class BasicTest extends BaseTest {
 
-    WebDriver driver = new WebDriverHelper().generateWebDriver();
+    private WebDriver driver = new WebDriverHelper().generateWebDriver();
 
-    WebDriver getDriver() {
+    private WebDriverWait wait = new WebDriverWait(driver, 100);
+
+    public WebDriver getDriver() {
         return driver;
+    }
+
+    public WebDriverWait getWait() {
+        return wait;
     }
 
     @Attachment
