@@ -1,0 +1,4 @@
+application:
+  automation:
+    username: standard_user
+    password: secret_sauce
