@@ -1,9 +1,5 @@
 package pages;
 
-import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -28,9 +24,5 @@ public class BasePage {
         driver.quit();
     }
 
-    @Attachment
-    @Step("Take screenshot")
-    public byte[] takeScreenShot() {
-        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
-    }
+
 }
