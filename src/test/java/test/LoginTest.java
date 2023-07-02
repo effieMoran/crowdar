@@ -7,18 +7,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.LoginPage;
+import service.InventoryService;
+import service.LoginService;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Epic("Coding Exercise")
 @Feature("Login")
 public class LoginTest extends BasicTest{
 
-    private LoginPage loginPage;
+    private LoginService loginService;
 
+    private InventoryService inventoryService;
     private ServiceConfig properties;
 
     private static final String AUTOMATION = "automation";
@@ -29,44 +30,37 @@ public class LoginTest extends BasicTest{
         WebDriver driver = super.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 100);
 
-        loginPage = new LoginPage(driver,wait);
-
-       Map<String, ServiceConfig> configuration = YamlConfig.init();
-       properties = configuration.get(AUTOMATION);
+        loginService = new LoginService(driver,wait);
+        inventoryService = new InventoryService(driver, wait);
+        Map<String, ServiceConfig> configuration = YamlConfig.init();
+        properties = configuration.get(AUTOMATION);
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Try to login with a previously registered user.")
+    @Description("Login with valid credentials")
     public void login() {
 
-        loginPage.navigate();
+        loginService.navigate();
 
-        loginPage.setUsername(properties.getUsername());
+        loginService.setUsername(properties.getUsername());
+        loginService.setPassword(properties.getPassword());
+        loginService.clickLoginButton();
 
-        loginPage.setPassword(properties.getPassword());
-
-        loginPage.clickSubmitButton();
-
-        assertThat(loginPage.getTitleText()).isEqualTo("Swag Labhhhs");
-
+        inventoryService.assertHeader("Swag Labs");
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Try to login with a previously registered user.")
-    public void loginSuccess() {
+    @Description("Login with valid credentials and fail because of the wrong header")
+    public void loginFail() {
 
-        loginPage.navigate();
+        loginService.navigate();
 
-        loginPage.setUsername(properties.getUsername());
+        loginService.setUsername(properties.getUsername());
+        loginService.setPassword(properties.getPassword());
+        loginService.clickLoginButton();
 
-        loginPage.setPassword(properties.getPassword());
-
-        loginPage.clickSubmitButton();
-
-        assertThat(loginPage.getTitleText()).isEqualTo("Swag Labs");
-
+        inventoryService.assertHeader("Swag Labshhhhh");
     }
-
 }
