@@ -20,7 +20,7 @@ public class LoginPage extends BasePage {
         super(driver,wait);
     }
 
-    @Step("Navigate to Anypoint Platform Sign in page")
+    @Step("Navigate to the Log-in page")
     public void navigate() {
         driver.get(super.getUrl());
     }
