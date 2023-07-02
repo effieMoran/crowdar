@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.LoginPage;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class LoginService {
 
@@ -32,9 +33,15 @@ public class LoginService {
     public void clickLoginButton() {
         loginPage.clickLoginButton();
     }
-//
-//    @Step("I click the 'Login' button")
-//    public void clickLoginButton(String password) {
-//        loginPage.setPassword(password);
-//    }
+
+    @Step("the field 'Username' is empty")
+    public void assertUsernameFieldIsEmpty() {
+        assertThat(loginPage.getUsername()).isNullOrEmpty();
+    }
+
+    @Step("the field 'Password' is empty")
+    public void assertPasswordFieldIsEmpty() {
+        assertThat(loginPage.getPassword()).isNullOrEmpty();
+    }
+
 }

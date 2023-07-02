@@ -42,6 +42,8 @@ public class LoginTest extends BasicTest{
     public void login() {
 
         loginService.navigate();
+        loginService.assertPasswordFieldIsEmpty();
+        loginService.assertUsernameFieldIsEmpty();
 
         loginService.setUsername(properties.getUsername());
         loginService.setPassword(properties.getPassword());
@@ -52,7 +54,7 @@ public class LoginTest extends BasicTest{
     }
 
     @Test
-    @Severity(SeverityLevel.CRITICAL)
+    @Severity(SeverityLevel.TRIVIAL)
     @Description("Login with valid credentials and fail because of the wrong header")
     public void loginFail() {
 

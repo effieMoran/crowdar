@@ -2,7 +2,7 @@ Feature: Login to Swag Labs
 
   Background:
     Given I navigate to the 'Log-in' page
-    And the field 'email' is empty
+    And the field 'Username' is empty
     And the field 'password' is empty
 
   Scenario: Login successfully

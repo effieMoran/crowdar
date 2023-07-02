@@ -29,6 +29,14 @@ public class LoginPage extends BasePage {
         driver.findElement(passwordLocator).sendKeys(password);
     }
 
+    public String getUsername() {
+        return driver.findElement(usernameLocator).getText();
+    }
+
+    public String getPassword() {
+        return driver.findElement(passwordLocator).getText();
+    }
+
     public void clickLoginButton() {
         driver.findElement(submitButtonLocator).click();
     }
