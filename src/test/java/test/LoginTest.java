@@ -13,7 +13,7 @@ import service.LoginService;
 import java.util.Map;
 
 
-@Epic("Coding Exercise")
+@Epic("Swag Labs")
 @Feature("Login")
 public class LoginTest extends BasicTest{
 
@@ -21,8 +21,8 @@ public class LoginTest extends BasicTest{
 
     private InventoryService inventoryService;
     private ServiceConfig properties;
-
-    private static final String AUTOMATION = "automation";
+    private Map<String, ServiceConfig> configuration;
+    private static final String STANDARD_USER = "standard_user";
 
     @BeforeEach
     public void beforeTest() {
@@ -32,14 +32,16 @@ public class LoginTest extends BasicTest{
 
         loginService = new LoginService(driver,wait);
         inventoryService = new InventoryService(driver, wait);
-        Map<String, ServiceConfig> configuration = YamlConfig.init();
-        properties = configuration.get(AUTOMATION);
+        configuration = YamlConfig.init();
+
     }
 
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Description("Login with valid credentials")
     public void login() {
+
+        properties = configuration.get(STANDARD_USER);
 
         loginService.navigate();
         loginService.assertPasswordFieldIsEmpty();
