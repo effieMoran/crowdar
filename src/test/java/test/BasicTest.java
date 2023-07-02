@@ -13,7 +13,7 @@ public class BasicTest extends BaseTest {
 
     private WebDriver driver = new WebDriverHelper().generateWebDriver();
 
-    private WebDriverWait wait = new WebDriverWait(driver, 100);
+    private WebDriverWait wait = new WebDriverWait(driver, 10);
 
     public WebDriver getDriver() {
         return driver;

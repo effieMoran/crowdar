@@ -14,6 +14,7 @@ public class LoginService {
         loginPage = new LoginPage(driver, wait);
     }
 
+    private String ERROR_MESSAGE = "Epic sadface: Sorry, this user has been locked out.";
     @Step("I navigate to the 'Log-in' page")
     public void navigate() {
         loginPage.navigateToLogin();
@@ -44,4 +45,8 @@ public class LoginService {
         assertThat(loginPage.getPassword()).isNullOrEmpty();
     }
 
+    @Step("the field 'Password' is empty")
+    public void assertLockedOutUserMessage() {
+        assertThat(ERROR_MESSAGE).isEqualTo(loginPage.getLockedOutErrorMessage());
+    }
 }

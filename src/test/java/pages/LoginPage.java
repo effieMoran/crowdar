@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage {
@@ -12,6 +13,7 @@ public class LoginPage extends BasePage {
 
     private By submitButtonLocator = By.cssSelector("input[data-test=login-button]");
 
+    private By lockedOutUserError = By.cssSelector("h3[data-test=error]");
 
     public LoginPage(WebDriver driver, WebDriverWait wait) {
         super(driver,wait);
@@ -41,4 +43,8 @@ public class LoginPage extends BasePage {
         driver.findElement(submitButtonLocator).click();
     }
 
+    public String getLockedOutErrorMessage() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(lockedOutUserError));
+        return driver.findElement(lockedOutUserError).getText();
+    }
 }

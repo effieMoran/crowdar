@@ -15,6 +15,7 @@ public class InventoryPage extends BasePage {
 
     private By titleLocator = By.className("app_logo");
 
+    private By secondaryTitleLocator = By.cssSelector(".header_secondary_container > span");
 
     public String getPageUri() {
         return PAGE_URL + URI;
@@ -23,5 +24,9 @@ public class InventoryPage extends BasePage {
     public String getTitleText() {
         wait.until(ExpectedConditions.presenceOfElementLocated(titleLocator));
         return driver.findElement(titleLocator).getText();
+    }
+    public String getSecondaryTitleText() {
+        wait.until(ExpectedConditions.presenceOfElementLocated(titleLocator));
+        return driver.findElement(secondaryTitleLocator).getText();
     }
 }

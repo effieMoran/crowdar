@@ -13,6 +13,8 @@ public class InventoryService {
     private InventoryPage inventoryPage;
     private BasePage basePage;
 
+    private static final String PRODUCTS = "Products";
+
     public InventoryService(WebDriver driver, WebDriverWait wait) {
         inventoryPage = new InventoryPage(driver, wait);
         basePage = new BasePage(driver,wait);
@@ -27,5 +29,10 @@ public class InventoryService {
     @Step("the inventory URL is displayed")
     public void assertUrl() {
         assertThat(inventoryPage.getPageUri()).isEqualTo(basePage.getCurrentURL());
+    }
+
+    @Step("the secondary title 'Products' is displayed")
+    public void assertProductsLabel() {
+        assertThat(PRODUCTS).isEqualTo(inventoryPage.getSecondaryTitleText());
     }
 }
