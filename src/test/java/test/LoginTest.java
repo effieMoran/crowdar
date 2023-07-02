@@ -48,6 +48,7 @@ public class LoginTest extends BasicTest{
         loginService.clickLoginButton();
 
         inventoryService.assertHeader("Swag Labs");
+        inventoryService.assertUrl();
     }
 
     @Test
