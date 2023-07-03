@@ -11,7 +11,7 @@
 - [x] 2_2 Take a screenshot when a test fails
 - [x] 3 Automated test cases from the list in the first point.
 - [x] 4 One of the test cases fails intentionally.
-- [ ] 5 Rest service.
+- [x] 5 Rest service.
 
 Notes: 
 
@@ -20,7 +20,7 @@ Notes:
 
 # Execute 
 
-- To run the tests execute `mvn test` on a terminal in the root folder as a path.
+- To run the tests execute `mvn clean test site` on a terminal in the root folder as a path.
 
 - To generate the report execute `mvn allure:report` on a terminal in the same path.
 
