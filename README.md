@@ -85,6 +85,17 @@ Contains configuration files like the YML configuration.
 Nice to have 
 - [ ] Move the the `takeScreenshot()` method to an utility class inside the Utils folder.
 - [ ] Add the browser data to the configuration file or create a new file containing the browser data so it is nor hardcoded.
+
+```yaml
+browser:
+  name: chrome
+  version: 88.0.4324.96
+execution:
+    headless: true
+    start-maximized: false
+    ...
+```
+
 - [ ] Create a factory method to choose which browser will execute the test cases.
 
 
