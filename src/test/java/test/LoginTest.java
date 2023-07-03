@@ -20,7 +20,7 @@ public class LoginTest extends BasicTest{
     private LoginService loginService;
 
     private InventoryService inventoryService;
-    //private ServiceConfig properties;
+
     private Map<String, ServiceConfig> configuration;
 
     private static final String STANDARD_USER = "standard_user";
@@ -45,14 +45,17 @@ public class LoginTest extends BasicTest{
 
         ServiceConfig properties = configuration.get(STANDARD_USER);
 
+        //Given
         loginService.navigate();
         loginService.assertPasswordFieldIsEmpty();
         loginService.assertUsernameFieldIsEmpty();
 
+        //When
         loginService.setUsername(properties.getUsername());
         loginService.setPassword(properties.getPassword());
         loginService.clickLoginButton();
 
+        //Then
         inventoryService.assertProductsLabel();
         inventoryService.assertHeader("Swag Labs");
         inventoryService.assertUrl();
@@ -67,14 +70,88 @@ public class LoginTest extends BasicTest{
 
         ServiceConfig properties = configuration.get(LOCKED_OUT_USER);
 
+        //Given
         loginService.navigate();
         loginService.assertPasswordFieldIsEmpty();
         loginService.assertUsernameFieldIsEmpty();
 
+        //When
         loginService.setUsername(properties.getUsername());
         loginService.setPassword(properties.getPassword());
         loginService.clickLoginButton();
 
+        //Then
+        loginService.assertLockedOutUserMessage(ERROR_MESSAGE);
+        loginService.assertFieldUsernameContainsError();
+        loginService.assertFieldPasswordContainsError();
+    }
+
+    @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Wrong password")
+    public void loginWithWrongPassword() {
+
+        final String ERROR_MESSAGE = "Epic sadface: Username and password do not match any user in this service";
+        final String WRONG_PASSWORD = "123456";
+        ServiceConfig properties = configuration.get(STANDARD_USER);
+
+        //Given
+        loginService.navigate();
+        loginService.assertPasswordFieldIsEmpty();
+        loginService.assertUsernameFieldIsEmpty();
+
+        //When
+        loginService.setUsername(properties.getUsername());
+        loginService.setPassword(WRONG_PASSWORD);
+        loginService.clickLoginButton();
+
+        //Then
+        loginService.assertLockedOutUserMessage(ERROR_MESSAGE);
+        loginService.assertFieldUsernameContainsError();
+        loginService.assertFieldPasswordContainsError();
+    }
+
+    @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Description("No username is provided")
+    public void tryToLoginWithoutUsername() {
+
+        final String ERROR_MESSAGE = "Epic sadface: Username is required";
+        ServiceConfig properties = configuration.get(STANDARD_USER);
+
+        //Given
+        loginService.navigate();
+        loginService.assertPasswordFieldIsEmpty();
+        loginService.assertUsernameFieldIsEmpty();
+
+        //When
+        loginService.setPassword(properties.getPassword());
+        loginService.clickLoginButton();
+
+        //Then
+        loginService.assertLockedOutUserMessage(ERROR_MESSAGE);
+        loginService.assertFieldUsernameContainsError();
+        loginService.assertFieldPasswordContainsError();
+    }
+
+    @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Description("No password is provided")
+    public void tryToLoginWithoutPassword() {
+
+        final String ERROR_MESSAGE = "Epic sadface: Password is required";
+        ServiceConfig properties = configuration.get(STANDARD_USER);
+
+        //Given
+        loginService.navigate();
+        loginService.assertPasswordFieldIsEmpty();
+        loginService.assertUsernameFieldIsEmpty();
+
+        //When
+        loginService.setUsername(properties.getUsername());
+        loginService.clickLoginButton();
+
+        //Then
         loginService.assertLockedOutUserMessage(ERROR_MESSAGE);
         loginService.assertFieldUsernameContainsError();
         loginService.assertFieldPasswordContainsError();
