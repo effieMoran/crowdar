@@ -11,22 +11,32 @@ Feature: Login to Swag Labs
     And I click the 'Login' button
     Then the title 'Swag labs' is displayed
 
-  Scenario: Error on empty fields
+  Scenario: Unable to login with a locked user
+    When I type 'locked_out_user' in the 'email' field
+    And I type 'secret_sauce' in 'password'
     When I click the 'Login' button
-    Then field 'email' should be with error
-    And field 'password' should be with error
+    Then field 'username' should show an error
+    And field 'password' should show an error
+    And the error message 'Epic sadface: Sorry, this user has been locked out.' is displayed
 
   Scenario: Wrong password
-    When I type 'john.test@keepfy.com' in 'email'
+    When I type 'standard_user' in the 'email' field
     And I type '123456' in 'password'
-    And I click on 'enter'
-    Then I should see 'E-mail or password is incorrect'
+    When I click the 'Login' button
+    Then field 'username' should show an error
+    And field 'password' should show an error
+    And the error message 'Epic sadface: Username and password do not match any user in this service' is displayed
 
-  Scenario: Login successfully
-    Given I have users:
-      | name           | email             | password |
-      | Vitor Batista  | vitor@keepfy.com  | abcdef   |
-    When I type 'vitor@keepfy.com' in 'email'
-    And I type 'abcdef' in 'password'
-    And I click on 'enter'
-    Then I shouldn't see 'Access your account'
+  Scenario: No username is provided
+    When I type 'secret_sauce' in 'password'
+    When I click the 'Login' button
+    Then field 'username' should show an error
+    And field 'password' should show an error
+    And the error message 'Epic sadface: Username is required' is displayed
+
+  Scenario: No password is provided
+    When I type 'standard_user' in the 'email' field
+    When I click the 'Login' button
+    Then field 'username' should show an error
+    And field 'password' should show an error
+    And the error message 'Epic sadface: Password is required' is displayed

@@ -14,7 +14,7 @@ public class LoginService {
         loginPage = new LoginPage(driver, wait);
     }
 
-    private String ERROR_MESSAGE = "Epic sadface: Sorry, this user has been locked out.";
+    private static final String FIELD_CLASS_ERROR = "input_error form_input error";
     @Step("I navigate to the 'Log-in' page")
     public void navigate() {
         loginPage.navigateToLogin();
@@ -45,8 +45,18 @@ public class LoginService {
         assertThat(loginPage.getPassword()).isNullOrEmpty();
     }
 
-    @Step("the field 'Password' is empty")
-    public void assertLockedOutUserMessage() {
-        assertThat(ERROR_MESSAGE).isEqualTo(loginPage.getLockedOutErrorMessage());
+    @Step("the error message '{0}' is displayed")
+    public void assertLockedOutUserMessage(String errorMessage) {
+        assertThat(errorMessage).isEqualTo(loginPage.getLockedOutErrorMessage());
+    }
+
+    @Step("Then field 'username' should show an error")
+    public void assertFieldUsernameContainsError() {
+        assertThat(FIELD_CLASS_ERROR).isEqualTo(loginPage.getUsernameErrorClass());
+    }
+
+    @Step("Then field 'password' should show an error")
+    public void assertFieldPasswordContainsError() {
+        assertThat(FIELD_CLASS_ERROR).isEqualTo(loginPage.getUsernameErrorClass());
     }
 }

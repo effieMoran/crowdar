@@ -47,4 +47,12 @@ public class LoginPage extends BasePage {
         wait.until(ExpectedConditions.presenceOfElementLocated(lockedOutUserError));
         return driver.findElement(lockedOutUserError).getText();
     }
+
+    public String getUsernameErrorClass() {
+        return driver.findElement(usernameLocator).getAttribute("class");
+    }
+
+    public String getPasswordErrorClass() {
+        return driver.findElement(passwordLocator).getAttribute("class");
+    }
 }

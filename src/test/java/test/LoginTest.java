@@ -25,8 +25,6 @@ public class LoginTest extends BasicTest{
 
     private static final String STANDARD_USER = "standard_user";
     private static final String LOCKED_OUT_USER = "locked_out_user";
-    private static final String PROBLEM_USER = "problem_user";
-    private static final String PERFORMANCE_GLITCH_USER = "performance_glitch_user";
 
     @BeforeEach
     public void beforeTest() {
@@ -38,7 +36,6 @@ public class LoginTest extends BasicTest{
 
         loginService = new LoginService(driver,wait);
         inventoryService = new InventoryService(driver, wait);
-
     }
 
     @Test
@@ -46,7 +43,7 @@ public class LoginTest extends BasicTest{
     @Description("Login with valid credentials")
     public void login() {
 
-        ServiceConfig properties= configuration.get(STANDARD_USER);
+        ServiceConfig properties = configuration.get(STANDARD_USER);
 
         loginService.navigate();
         loginService.assertPasswordFieldIsEmpty();
@@ -56,6 +53,7 @@ public class LoginTest extends BasicTest{
         loginService.setPassword(properties.getPassword());
         loginService.clickLoginButton();
 
+        inventoryService.assertProductsLabel();
         inventoryService.assertHeader("Swag Labs");
         inventoryService.assertUrl();
     }
@@ -64,6 +62,8 @@ public class LoginTest extends BasicTest{
     @Severity(SeverityLevel.CRITICAL)
     @Description("Try to login with locked out user")
     public void loginWithLockedOutUser() {
+
+        String ERROR_MESSAGE = "Epic sadface: Sorry, this user has been locked out.";
 
         ServiceConfig properties = configuration.get(LOCKED_OUT_USER);
 
@@ -75,9 +75,9 @@ public class LoginTest extends BasicTest{
         loginService.setPassword(properties.getPassword());
         loginService.clickLoginButton();
 
-        loginService.assertLockedOutUserMessage();
-
-
+        loginService.assertLockedOutUserMessage(ERROR_MESSAGE);
+        loginService.assertFieldUsernameContainsError();
+        loginService.assertFieldPasswordContainsError();
     }
 
     @Test
